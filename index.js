@@ -75,7 +75,8 @@ const handleDataLoaded = function(data) {
 
 document.addEventListener('DOMContentLoaded', ()=>{
   fetch("data.json").then(response => {
-    const data = response.json();
+    return response.json();
+  }).then(data => {
     handleDataLoaded(data);
   });
 });
