@@ -1,14 +1,3 @@
-const handleFileChange = function(event) {
-  const input = event.target;
-  const reader = new FileReader();
-  reader.onload = function() {
-    const rawData = reader.result;
-    data = JSON.parse(rawData);
-    handleDataLoaded(data);
-  };
-  reader.readAsText(input.files[0]);
-};
-
 const mergeTimeseries = function(...series) {
   merged = [];
   series.forEach((serie, index) => {
@@ -21,9 +10,6 @@ const mergeTimeseries = function(...series) {
 };
 
 const handleDataLoaded = function(data) {
-  document.getElementById("file_selector").hidden = true;
-  document.getElementById("graph_container").hidden = false;
-
   let graphs = {};
 
   graphs.weight = new Dygraph(
@@ -86,3 +72,10 @@ const handleDataLoaded = function(data) {
     range: false
   });
 };
+
+document.addEventListener('DOMContentLoaded', ()=>{
+  fetch("data.json").then(response => {
+    const data = response.json();
+    handleDataLoaded(data);
+  });
+});
