@@ -1,0 +1,8 @@
+.graph { position: absolute; }
+
+.graph--tl { right: 50vw; top:           0vh; left:  0vw; bottom: calc(200vh/3); }
+.graph--ml { right: 50vw; top: calc(100vh/3); left:  0vw; bottom: calc(100vh/3); }
+.graph--bl { right: 50vw; top: calc(200vh/3); left:  0vw; bottom:           0vh; }
+.graph--tr { right:  0vw; top:           0vh; left: 50vw; bottom: calc(200vh/3); }
+.graph--mr { right:  0vw; top: calc(100vh/3); left: 50vw; bottom: calc(100vh/3); }
+.graph--br { right:  0vw; top: calc(200vh/3); left: 50vw; bottom:           0vh; }

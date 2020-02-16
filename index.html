@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <title>Hives</title>
+    <link rel="stylesheet" href="dash.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/dygraph/2.1.0/dygraph.js" integrity="sha256-E7nBugZ/YuTywPG7MCezJ/wRiTIC3Bb0wiAYoLAkYg8=" crossorigin="anonymous"></script>
+    <script src="vendor/synchronizer.js"></script>
+    <script src="dash.js"></script>
+  </head>
+  <body>
+    <input id='file_selector' type='file' accept='application/json' onchange='handleFileChange(event)'><br>
+    <div class='graphs' id='graph_container' hidden>
+      <div class="graph graph--tl" id='graph_weight'></div>
+      <div class="graph graph--ml" id='graph_humidity'></div>
+      <div class="graph graph--bl" id='graph_temperature'></div>
+      <div class="graph graph--tr" id='graph_power'></div>
+      <div class="graph graph--mr" id='graph_light'></div>
+      <div class="graph graph--br" id='graph_sound'></div>
+    </div>
+  </body>
+</html>
