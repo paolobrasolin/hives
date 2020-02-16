@@ -1,17 +1,39 @@
-name: CI
-
-on: [push]
-
+name: Hive data poller
+on:
+  push:
+  schedule:
+    - cron: '0 3 * * *'
 jobs:
   build:
-
     runs-on: ubuntu-latest
-
     steps:
-    - uses: actions/checkout@v2
-    - name: Run a one-line script
-      run: echo Hello, world!
-    - name: Run a multi-line script
+    - uses: actions/checkout@master
+    - name: Use Ruby
+      uses: actions/setup-ruby@master
+      with:
+        ruby-version: '2.7.0'
+        architecture: 'x64'
+    - name: Cache gems
+      uses: actions/cache@v1
+      with:
+        path: ${{ runner.tool_cache }}/Ruby/2.7.0/x64/lib/ruby/gems
+        key: ${{ runner.os }}-gems-${{ hashFiles('Gemfile.lock') }}
+    - name: Update gems
       run: |
-        echo Add other actions to build,
-        echo test, and deploy your project.
+        gem install bundler 
+        bundle install --jobs 4 --retry 3
+    - name: Fetch hive data
+      env:
+        HOST: ${{ secrets.HIVE__HOST }}
+        USER_EMAIL: ${{ secrets.HIVE__USER_EMAIL }}
+        USER_PASSWORD: ${{ secrets.HIVE__USER_PASSWORD }}
+        HIVE_ID: ${{ secrets.HIVE__HIVE_ID }}
+      run: |
+        ruby fetch_data.rb
+    - name: Commit and push hive data (if changed)
+      run: |
+        git config --local user.email "action@github.com"
+        git config --local user.name "GitHub Action"
+        REMOTE_REPO="https://${GITHUB_ACTOR}@github.com/${GITHUB_REPOSITORY}.git"
+        git commit docs/data.json -m "auto: update hive data"
+        if [ $? -eq 0 ]; then git push "${REMOTE_REPO}" HEAD:master; else exit 0; fi
