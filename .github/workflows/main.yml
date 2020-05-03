@@ -11,12 +11,12 @@ jobs:
     - name: Use Ruby
       uses: actions/setup-ruby@master
       with:
-        ruby-version: '2.7.0'
+        ruby-version: '2.7.1'
         architecture: 'x64'
     - name: Cache gems
       uses: actions/cache@v1
       with:
-        path: ${{ runner.tool_cache }}/Ruby/2.7.0/x64/lib/ruby/gems
+        path: ${{ runner.tool_cache }}/Ruby/2.7.1/x64/lib/ruby/gems
         key: ${{ runner.os }}-gems-${{ hashFiles('Gemfile.lock') }}
     - name: Update gems
       run: |
